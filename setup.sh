@@ -253,12 +253,12 @@ main() {
             targetFile="/$(printf "%s" "$f" | sed "s/\.\///g" | sed "s/root\///g")"
 
             if [ -e "$targetFile" ]; then
-                if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
+                if [ "$(sudo readlink "$targetFile")" != "$sourceFile" ]; then
 
                     ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                     if answer_is_yes; then
-                        rm -rf "$targetFile"
-                        ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                        sudo rm -rf "$targetFile"
+                        sudo ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
                         execute_result $? "$targetFile → $sourceFile"
                     else
                         print_error "$targetFile → $sourceFile"
@@ -268,7 +268,7 @@ main() {
                     print_success "$targetFile → $sourceFile"
                 fi
             else
-                ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                sudo ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
                 execute_result $? "$targetFile → $sourceFile"
             fi
         done
