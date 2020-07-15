@@ -241,7 +241,7 @@ main() {
         for d in ${dirs}; do
             ifs_revert
             targetDir="/$(printf "%s" "$d" | sed "s/\.\///g" | sed "s/ROOT\///g")"
-            mkdir -p "$targetDir"
+            sudo mkdir -p "$targetDir"
         done
 
         files=$(find $i -type f)
