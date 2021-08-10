@@ -18,8 +18,6 @@
 [fetch]
 	# Auto-kill defunct remote branches
 	prune = true
-[credential]
-	helper = osxkeychain
 [credential "https://source.developers.google.com"]
 	useHttpPath = true
 [include]
