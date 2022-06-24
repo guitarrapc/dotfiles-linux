@@ -7,6 +7,11 @@ if [[ -d "${KUBECTX_PATH}" ]]; then
     PS1='[\u@\h \W $(kube_ps1)]\$ '
 fi
 
+TERRAFORM_PATH=/usr/local/bin/terraform
+if [[ -f "${TERRAFORM_PATH}" ]]; then
+    complete -C ${TERRAFORM_PATH} terraform
+fi
+
 if [[ -f "${HOME}/.bashrc_wsl2" ]]; then
     source "${HOME}/.bashrc_wsl2"
 
