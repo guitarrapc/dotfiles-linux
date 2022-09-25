@@ -199,7 +199,7 @@ main() {
         ifs_by_line
         for d in ${dirs}; do
             ifs_revert
-            targetDir="$HOME/$(printf "%s" "$d" | sed -e "s/\.\///g" | sed -e "s/$HOME\///g")"
+            targetDir="$HOME/$(printf "%s" "$d" | sed -e "s|\./||g" | sed -e "s|$HOME/||g")"
             mkdir -p "$targetDir"
         done
 
@@ -208,8 +208,8 @@ main() {
         for f in ${files}; do
             ifs_revert
 
-            sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s/\.\///g")"
-            targetFile="$HOME/$(printf "%s" "$f" | sed "s/\.\///g" | sed "s/$HOME\///g")"
+            sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
+            targetFile="$HOME/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|$HOME/||g")"
 
             if [ -e "$targetFile" ]; then
                 if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
@@ -240,7 +240,7 @@ main() {
         ifs_by_line
         for d in ${dirs}; do
             ifs_revert
-            targetDir="/$(printf "%s" "$d" | sed "s/\.\///g" | sed "s/ROOT\///g")"
+            targetDir="/$(printf "%s" "$d" | sed "s|\./||g" | sed "s|/||g")"
             sudo mkdir -p "$targetDir"
         done
 
@@ -249,8 +249,8 @@ main() {
         for f in ${files}; do
             ifs_revert
 
-            sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s/\.\///g")"
-            targetFile="/$(printf "%s" "$f" | sed "s/\.\///g" | sed "s/ROOT\///g")"
+            sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
+            targetFile="/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|/||g")"
 
             if [ -e "$targetFile" ]; then
                 if [ "$(sudo readlink "$targetFile")" != "$sourceFile" ]; then
