@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eux
 
 # this symlinks all the dotfiles (and .vim/) to ~/
 # it also symlinks ~/bin for easy updating
