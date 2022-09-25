@@ -153,10 +153,10 @@ declare -a FILES_TO_SYMLINK=$(find . -maxdepth 1 -type f -name ".*" -not -name .
 #FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
 
 # find all directories to keep directory tree and symlink child files
-declare -a DIR_TREE_OF_SYMLINK=$(find HOME -mindepth 1 -maxdepth 1 -type d -name "*")
+declare -a DIR_TREE_OF_SYMLINK=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name "*")
 
 # find all directories to keep directory tree and symlink child files
-declare -a ROOT_DIR_TREE_OF_SYMLINK=$(find ROOT -mindepth 1 -maxdepth 1 -type d -name "*")
+declare -a ROOT_DIR_TREE_OF_SYMLINK=$(find "$ROOT" -mindepth 1 -maxdepth 1 -type d -name "*")
 
 main() {
 
