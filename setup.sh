@@ -148,15 +148,18 @@ print_success() {
 # actual symlink stuff
 #
 
+# this script's directory
+declare -a SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
 # finds all .dotfiles in this folder
 declare -a FILES_TO_SYMLINK=$(find . -maxdepth 1 -type f -name ".*" -not -name .DS_Store -not -name .git -not -name .gitignore -not -name .gitattributes -not -name .bash_history -not -name .editorconfig | sed -e 's|//|/|' | sed -e 's|./.|.|')
 #FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
 
 # find all directories to keep directory tree and symlink child files
-declare -a HOME_DIR_TREE_OF_SYMLINK=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name "*")
+declare -a HOME_DIR_TREE_OF_SYMLINK=$(find "$SCRIPT_DIR/HOME" -mindepth 1 -maxdepth 1 -type d -name "*")
 
 # find all directories to keep directory tree and symlink child files
-declare -a ROOT_DIR_TREE_OF_SYMLINK=$(find "$ROOT" -mindepth 1 -maxdepth 1 -type d -name "*")
+declare -a ROOT_DIR_TREE_OF_SYMLINK=$(find "$SCRIPT_DIR/ROOT" -mindepth 1 -maxdepth 1 -type d -name "*")
 
 main() {
 
@@ -199,7 +202,7 @@ main() {
         ifs_by_line
         for d in ${dirs}; do
             ifs_revert
-            targetDir="$HOME/$(printf "%s" "$d" | sed -e "s|\./||g" | sed -e "s|$HOME/||g")"
+            targetDir="$HOME/$(printf "%s" "$d" | sed -e "s|\./||g" | sed -e "s|HOME/||g")"
             mkdir -p "$targetDir"
         done
 
@@ -209,7 +212,7 @@ main() {
             ifs_revert
 
             sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
-            targetFile="$HOME/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|$HOME/||g")"
+            targetFile="$HOME/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|HOME/||g")"
 
             if [ -e "$targetFile" ]; then
                 if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
@@ -240,7 +243,7 @@ main() {
         ifs_by_line
         for d in ${dirs}; do
             ifs_revert
-            targetDir="/$(printf "%s" "$d" | sed "s|\./||g" | sed "s|/||g")"
+            targetDir="/$(printf "%s" "$d" | sed "s|\./||g" | sed "s|ROOT/||g")"
             sudo mkdir -p "$targetDir"
         done
 
@@ -250,7 +253,7 @@ main() {
             ifs_revert
 
             sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
-            targetFile="/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|/||g")"
+            targetFile="/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|ROOT/||g")"
 
             if [ -e "$targetFile" ]; then
                 if [ "$(sudo readlink "$targetFile")" != "$sourceFile" ]; then
