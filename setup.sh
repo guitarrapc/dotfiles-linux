@@ -153,7 +153,7 @@ declare -a FILES_TO_SYMLINK=$(find . -maxdepth 1 -type f -name ".*" -not -name .
 #FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
 
 # find all directories to keep directory tree and symlink child files
-declare -a DIR_TREE_OF_SYMLINK=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name "*")
+declare -a HOME_DIR_TREE_OF_SYMLINK=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d -name "*")
 
 # find all directories to keep directory tree and symlink child files
 declare -a ROOT_DIR_TREE_OF_SYMLINK=$(find "$ROOT" -mindepth 1 -maxdepth 1 -type d -name "*")
@@ -193,13 +193,13 @@ main() {
     local targetDir=""
     local d=""
     local f=""
-    for i in ${DIR_TREE_OF_SYMLINK[@]}; do
+    for i in ${HOME_DIR_TREE_OF_SYMLINK[@]}; do
 
         dirs=$(find $i -type d)
         ifs_by_line
         for d in ${dirs}; do
             ifs_revert
-            targetDir="$HOME/$(printf "%s" "$d" | sed "s/\.\///g" | sed "s/HOME\///g")"
+            targetDir="$HOME/$(printf "%s" "$d" | sed -e "s/\.\///g" | sed -e "s/$HOME\///g")"
             mkdir -p "$targetDir"
         done
 
@@ -209,7 +209,7 @@ main() {
             ifs_revert
 
             sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s/\.\///g")"
-            targetFile="$HOME/$(printf "%s" "$f" | sed "s/\.\///g" | sed "s/HOME\///g")"
+            targetFile="$HOME/$(printf "%s" "$f" | sed "s/\.\///g" | sed "s/$HOME\///g")"
 
             if [ -e "$targetFile" ]; then
                 if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
