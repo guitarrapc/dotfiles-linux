@@ -152,7 +152,7 @@ print_success() {
 declare -a SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 # finds all .dotfiles in this folder
-declare -a FILES_TO_SYMLINK=$(find . -maxdepth 1 -type f -name ".*" -not -name .DS_Store -not -name .git -not -name .gitignore -not -name .gitattributes -not -name .bash_history -not -name .editorconfig | sed -e 's|//|/|' | sed -e 's|./.|.|')
+declare -a FILES_TO_SYMLINK=$(find "$SCRIPT_DIR/" -maxdepth 1 -type f -name ".*" -not -name .DS_Store -not -name .git -not -name .gitignore -not -name .gitattributes -not -name .bash_history -not -name .editorconfig | sed -e 's|//|/|' | sed -e 's|./.|.|')
 #FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
 
 # find all directories to keep directory tree and symlink child files
