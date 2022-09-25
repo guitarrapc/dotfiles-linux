@@ -12,10 +12,7 @@ if [[ -f "${TERRAFORM_PATH}" ]]; then
     complete -C ${TERRAFORM_PATH} terraform
 fi
 
-if [[ -f "${HOME}/.bashrc_wsl2" ]]; then
+is_wsl2=$(cat /proc/version | grep -c microsoft-standard)
+if [[ "$is_wsl2" == "1" && -f "${HOME}/.bashrc_wsl2" ]]; then
     source "${HOME}/.bashrc_wsl2"
-
-    # use Windows Docker Desktop as Docker daemon
-    # #!/bin/bash
-    # export DOCKER_HOST="tcp://$(ip route list default | awk '{print $3}')"
 fi
