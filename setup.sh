@@ -132,12 +132,12 @@ print_question() {
 }
 
 print_result() {
-    [ $1 -eq 0 ] \
-        && print_success "$2" \
-        || print_error "$2"
-
-    [ $1 -ne 0 ] \
-        && exit $1
+    if [[ "$1" == "0" ]]; then
+        print_success "$2"
+    else
+        print_error "$2"
+        exit $1
+    fi
 }
 
 print_success() {
