@@ -12,6 +12,12 @@ if [[ -f "${TERRAFORM_PATH}" ]]; then
     complete -C ${TERRAFORM_PATH} terraform
 fi
 
+# https://github.com/99designs/aws-vault
+AWSVAULT_PATH=/usr/local/bin/aws-vault
+if [[ -f "${AWSVAULT_PATH}" ]]; then
+    export AWS_VAULT_BACKEND=file
+fi
+
 is_wsl2=$(cat /proc/version | grep -c microsoft-standard)
 if [[ "$is_wsl2" == "1" && -f "${HOME}/.bashrc_wsl2" ]]; then
     source "${HOME}/.bashrc_wsl2"
