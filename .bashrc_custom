@@ -7,13 +7,6 @@ if [[ -d "${KUBECTX_PATH}" ]]; then
     PS1='[\u@\h \W $(kube_ps1)]\$ '
 fi
 
-# https://asdf-vm.com/guide/getting-started.html#community-supported-download-methods
-ASDF_PATH=${HOME}/.asdf
-if [[ -d "${ASDF_PATH}" ]]; then
-    source "$HOME/.asdf/asdf.sh"
-    source "$HOME/.asdf/completions/asdf.bash"
-fi
-
 TERRAFORM_PATH=/usr/local/bin/terraform
 if [[ -f "${TERRAFORM_PATH}" ]]; then
     complete -C ${TERRAFORM_PATH} terraform
