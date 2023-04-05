@@ -1,0 +1,38 @@
+name: Check
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dotfiles
+        run: bash ./install.sh
+      - name: Check installed files
+        run: ls -la "$HOME"
+
+  # shellcheck:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     # Runs `shellcheck` command against `sh` shell.
+  #     - name: Bourne shell (sh)
+  #       uses: ludeeus/action-shellcheck@master
+  #       env:
+  #         SHELLCHECK_OPTS: --norc -ax -s sh
+
+  #     # Runs `shellcheck` command against `bash` shell.
+  #     - name: Bourne Again Shell (bash)
+  #       if: always()
+  #       uses: ludeeus/action-shellcheck@master
+  #       env:
+  #         SHELLCHECK_OPTS: --norc -ax -s bash
