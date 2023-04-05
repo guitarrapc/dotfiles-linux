@@ -9,14 +9,24 @@ on:
 
 jobs:
   install:
+    strategy:
+      fail-fast: false
+      matrix:
+        force: ["y", "n"]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - name: Install dotfiles
-        run: bash ./install.sh --force
-      - name: Check installed files
-        run: ls -la "$HOME"
+        run: bash ./install.sh --force ${{ matrix.force }}
+      - name: Test installed files
+        run: |
+          set -eo pipefail
+          ls -la "$HOME" | grep .gitconfig | grep "${{ github.workspace }}/dotfiles-linux/dotfiles-linux/.gitconfig"
+          ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/dotfiles-linux/dotfiles-linux/.gitignore_global"
+          if [[ "${{ matrix.force }}" == "y" ]]; then
+            ls -la "$HOME/.docker" | grep config.json | grep "${{ github.workspace }}/dotfiles-linux/dotfiles-linux/HOME/.docker/config.json"
+          fi
 
   # shellcheck:
   #   runs-on: ubuntu-latest

@@ -17,7 +17,7 @@ set -e
 
 while [ $# -gt 0 ]; do
     case $1 in
-        --force) _FORCE=true; shift 1; ;;
+        --force) _FORCE=$2; shift 2; ;; # input y or n
         *) shift ;;
     esac
 done
@@ -40,9 +40,9 @@ ask() {
 }
 
 ask_for_confirmation() {
-    if [[ "${_FORCE:=false}" == "true" ]]; then
+    if [[ "${_FORCE:=}" != "" ]]; then
         print_question "$1 (--force detected, skip prompt.)\n"
-        REPLY=y
+        REPLY=$_FORCE
         return
     fi
     print_question "$1 (y/n) "
