@@ -13,9 +13,14 @@ set -e
 
 
 
-# jump down to line ~140 for the start.
+# jump down to line ~157 for the start.
 
-
+while [ $# -gt 0 ]; do
+    case $1 in
+        --force) _FORCE=true; shift 1; ;;
+        *) shift ;;
+    esac
+done
 
 #
 # utils !!!
@@ -24,6 +29,10 @@ set -e
 declare -a PRE_IFS=$IFS
 
 answer_is_yes() {
+    if [[ "${_FORCE:=false}" == "true" ]]; then
+        return 0
+    fi
+
     [[ "$REPLY" =~ ^[Yy]$ ]] \
         && return 0 \
         || return 1
@@ -168,7 +177,7 @@ main() {
     local i=""
     local sourceFile=""
     local targetFile=""
-    for i in ${FILES_TO_SYMLINK[@]}; do
+    echo "${FILES_TO_SYMLINK[@]}" | while read -r i ; do
 
         sourceFile="$(pwd)/$i"
         targetFile="$HOME/$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
@@ -197,8 +206,7 @@ main() {
     local targetDir=""
     local d=""
     local f=""
-    for i in ${HOME_DIR_TREE_OF_SYMLINK[@]}; do
-
+    echo "${HOME_DIR_TREE_OF_SYMLINK[@]}" | while read -r i ; do
         dirs=$(find $i -type d)
         ifs_by_line
         for d in ${dirs}; do
@@ -238,8 +246,7 @@ main() {
     done
 
     # root directories
-    for i in ${ROOT_DIR_TREE_OF_SYMLINK[@]}; do
-
+    echo "${ROOT_DIR_TREE_OF_SYMLINK[@]}" | while read -r i ; do
         dirs=$(find $i -type d)
         ifs_by_line
         for d in ${dirs}; do
