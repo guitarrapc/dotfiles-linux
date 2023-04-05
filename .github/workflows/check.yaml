@@ -26,9 +26,10 @@ jobs:
           set -eo pipefail
           ls -la "$HOME" | grep .gitconfig | grep "${{ github.workspace }}/.gitconfig"
           ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/.gitignore_global"
-          if [[ "${{ matrix.force }}" == "y" ]]; then
-            ls -la "$HOME/.docker" | grep config.json | grep "${{ github.workspace }}/HOME/.docker/config.json"
+          if [[ "${{ matrix.force }}" == "n" ]]; then
+            docker_grep_arg="-v"
           fi
+          ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
 
   # shellcheck:
   #   runs-on: ubuntu-latest
