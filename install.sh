@@ -13,9 +13,14 @@ set -e
 
 
 
-# jump down to line ~140 for the start.
+# jump down to line ~157 for the start.
 
-
+while [ $# -gt 0 ]; do
+    case $1 in
+        --force) _FORCE=$2; shift 2; ;; # input y or n
+        *) shift ;;
+    esac
+done
 
 #
 # utils !!!
@@ -35,6 +40,11 @@ ask() {
 }
 
 ask_for_confirmation() {
+    if [[ "${_FORCE:=}" != "" ]]; then
+        print_question "$1 (--force detected, skip prompt.)\n"
+        REPLY=$_FORCE
+        return
+    fi
     print_question "$1 (y/n) "
     read -n 1
     printf "\n"
@@ -168,7 +178,7 @@ main() {
     local i=""
     local sourceFile=""
     local targetFile=""
-    for i in ${FILES_TO_SYMLINK[@]}; do
+    echo "${FILES_TO_SYMLINK[@]}" | while read -r i ; do
 
         sourceFile="$(pwd)/$i"
         targetFile="$HOME/$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
@@ -197,8 +207,7 @@ main() {
     local targetDir=""
     local d=""
     local f=""
-    for i in ${HOME_DIR_TREE_OF_SYMLINK[@]}; do
-
+    echo "${HOME_DIR_TREE_OF_SYMLINK[@]}" | while read -r i ; do
         dirs=$(find $i -type d)
         ifs_by_line
         for d in ${dirs}; do
@@ -238,8 +247,7 @@ main() {
     done
 
     # root directories
-    for i in ${ROOT_DIR_TREE_OF_SYMLINK[@]}; do
-
+    echo "${ROOT_DIR_TREE_OF_SYMLINK[@]}" | while read -r i ; do
         dirs=$(find $i -type d)
         ifs_by_line
         for d in ${dirs}; do
