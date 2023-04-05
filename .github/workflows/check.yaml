@@ -31,21 +31,15 @@ jobs:
           fi
           ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
 
-  # shellcheck:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-  #   steps:
-  #     - uses: actions/checkout@v3
+  shellcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
 
-  #     # Runs `shellcheck` command against `sh` shell.
-  #     - name: Bourne shell (sh)
-  #       uses: ludeeus/action-shellcheck@master
-  #       env:
-  #         SHELLCHECK_OPTS: --norc -ax -s sh
-
-  #     # Runs `shellcheck` command against `bash` shell.
-  #     - name: Bourne Again Shell (bash)
-  #       if: always()
-  #       uses: ludeeus/action-shellcheck@master
-  #       env:
-  #         SHELLCHECK_OPTS: --norc -ax -s bash
+      # Runs `shellcheck` command against `bash` shell.
+      - name: Bourne Again Shell (bash)
+        if: always()
+        uses: ludeeus/action-shellcheck@master
+        env:
+          SHELLCHECK_OPTS: --norc -ax -s bash
