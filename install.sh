@@ -41,7 +41,7 @@ ask() {
 
 ask_for_confirmation() {
     if [[ "${_FORCE:=false}" == "true" ]]; then
-        print_question "$1 (--force detected, skip prompt.) "
+        print_question "$1 (--force detected, skip prompt.)\n"
         REPLY=y
         return
     fi
