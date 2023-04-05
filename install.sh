@@ -29,10 +29,6 @@ done
 declare -a PRE_IFS=$IFS
 
 answer_is_yes() {
-    if [[ "${_FORCE:=false}" == "true" ]]; then
-        return 0
-    fi
-
     [[ "$REPLY" =~ ^[Yy]$ ]] \
         && return 0 \
         || return 1
@@ -44,6 +40,10 @@ ask() {
 }
 
 ask_for_confirmation() {
+    if [[ "${_FORCE:=false}" == "true" ]]; then
+        REPLY=y
+        return
+    fi
     print_question "$1 (y/n) "
     read -n 1
     printf "\n"
