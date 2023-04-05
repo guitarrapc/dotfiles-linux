@@ -30,3 +30,6 @@ jobs:
             docker_grep_arg="-v"
           fi
           ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
+          ls -la "/etc/profile.d" | grep profile_dotfiles_init_aws.sh
+          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectl.sh
+          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectx.sh
