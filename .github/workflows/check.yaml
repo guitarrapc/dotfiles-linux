@@ -6,6 +6,14 @@ on:
   pull_request:
     branches:
       - "master"
+  workflow_dispatch:
+    inputs:
+      sh-debug:
+        description: "enable debug on install.sh"
+        default: "-x"
+
+env:
+  SH_DEBUG: ${{ github.event_name == 'workflow_dispath' && inputs.sh-debug || '' }}
 
 jobs:
   install:
@@ -18,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dotfiles
-        run: bash -x ./install.sh --force ${{ matrix.force }}
+        run: bash ${SH_DEBUG} ./install.sh --force ${{ matrix.force }}
       - name: Show "$HOME"
         run: ls -la "$HOME"
       - name: Test installed files
