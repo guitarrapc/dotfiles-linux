@@ -221,8 +221,10 @@ main() {
 
                 if [[ "${current}" == "HOME" ]]; then
                     target_file_root="$HOME/"
+                    sudo_exec=
                 elif [[ "${current}" == "ROOT" ]]; then
                     target_file_root="/"
+                    sudo_exec=sudo
                 fi
 
                 sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
@@ -233,8 +235,8 @@ main() {
 
                         ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                         if answer_is_yes; then
-                            rm -rf "$targetFile"
-                            ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                            $sudo_exec rm -rf "$targetFile"
+                            $sudo_exec ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
                             execute_result $? "$targetFile → $sourceFile"
                         else
                             print_error "$targetFile → $sourceFile"
@@ -244,7 +246,7 @@ main() {
                         print_success "$targetFile → $sourceFile"
                     fi
                 else
-                    ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                    $sudo_exec ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
                     execute_result $? "$targetFile → $sourceFile"
                 fi
             done
