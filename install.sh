@@ -231,7 +231,8 @@ main() {
                         ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                         if answer_is_yes; then
                             $sudo_exec rm -rf "$targetFile"
-                            execute "$sudo_exec ln -fs \"${sourceFile}\" \"${targetFile}\"" "$targetFile → $sourceFile"
+                            $sudo_exec ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                            execute_result $? "$targetFile → $sourceFile"
                         else
                             print_error "$targetFile → $sourceFile"
                         fi
@@ -240,7 +241,8 @@ main() {
                         print_success "$targetFile → $sourceFile"
                     fi
                 else
-                    execute "$sudo_exec ln -fs \"${sourceFile}\" \"${targetFile}\"" "$targetFile → $sourceFile"
+                    $sudo_exec ln -fs "${sourceFile}" "${targetFile}" &> /dev/null
+                    execute_result $? "$targetFile → $sourceFile"
                 fi
             done
         done
