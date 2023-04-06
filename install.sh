@@ -170,9 +170,6 @@ OTHERS="HOME ROOT"
 main() {
 
     # dotfiles
-    local i=""
-    local sourceFile=""
-    local targetFile=""
     echo "${FILES_TO_SYMLINK[@]}" | while read -r i ; do
 
         sourceFile="$(pwd)/$i"
@@ -198,37 +195,35 @@ main() {
 
     done
 
-    local targetDir=""
-    local d=""
-    local f=""
     for current in ${OTHERS}; do
         # finds all .dotfiles in this folder
         declare -a TREE_OF_SYMLINK=$(cd "$SCRIPT_DIR"; find "${current}" -mindepth 1 -maxdepth 1 -type d -name "*")
 
+        # branch for HOME and ROOT
+        if [[ "${current}" == "HOME" ]]; then
+            target_file_root="$HOME/"
+            sudo_exec=
+        elif [[ "${current}" == "ROOT" ]]; then
+            target_file_root="/"
+            sudo_exec=sudo
+        fi
+
         echo "${TREE_OF_SYMLINK[@]}" | while read -r i ; do
-            dirs=$(find $i -type d)
+            dirs=$(find "$i" -type d)
             ifs_by_line
-            for d in ${dirs}; do
+            for dir in ${dirs}; do
                 ifs_revert
-                targetDir="$HOME/$(printf "%s" "$d" | sed -e "s|\./||g" | sed -e "s|${current}/||g")"
+                targetDir="$HOME/$(printf "%s" "$dir" | sed -e "s|\./||g" | sed -e "s|${current}/||g")"
                 mkdir -p "$targetDir"
             done
 
-            files=$(find $i -type f)
+            files=$(find "$i" -type f)
             ifs_by_line
-            for f in ${files}; do
+            for file in ${files}; do
                 ifs_revert
 
-                if [[ "${current}" == "HOME" ]]; then
-                    target_file_root="$HOME/"
-                    sudo_exec=
-                elif [[ "${current}" == "ROOT" ]]; then
-                    target_file_root="/"
-                    sudo_exec=sudo
-                fi
-
-                sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
-                targetFile="${target_file_root}$(printf "%s" "$f" | sed "s|\./||g" | sed "s|${current}/||g")"
+                sourceFile="$(pwd)/$(printf "%s" "$file" | sed "s|\./||g")"
+                targetFile="${target_file_root}$(printf "%s" "$file" | sed "s|\./||g" | sed "s|${current}/||g")"
 
                 if [ -e "$targetFile" ]; then
                     if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
