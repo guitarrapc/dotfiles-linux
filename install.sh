@@ -220,13 +220,13 @@ main() {
                 ifs_revert
 
                 if [[ "${current}" == "HOME" ]]; then
-                    target_file_root="$HOME"
+                    target_file_root="$HOME/"
                 elif [[ "${current}" == "ROOT" ]]; then
                     target_file_root="/"
                 fi
 
                 sourceFile="$(pwd)/$(printf "%s" "$f" | sed "s|\./||g")"
-                targetFile="${target_file_root}/$(printf "%s" "$f" | sed "s|\./||g" | sed "s|${current}/||g")"
+                targetFile="${target_file_root}$(printf "%s" "$f" | sed "s|\./||g" | sed "s|${current}/||g")"
 
                 if [ -e "$targetFile" ]; then
                     if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
