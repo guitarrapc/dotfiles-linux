@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dotfiles
-        run: bash ./install.sh --force ${{ matrix.force }}
+        run: bash -x ./install.sh --force ${{ matrix.force }}
       - name: Show "$HOME"
         run: ls -la "$HOME"
       - name: Test installed files
