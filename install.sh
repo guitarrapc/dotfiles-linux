@@ -89,9 +89,9 @@ get_os() {
     declare -r OS_NAME="$(uname -s)"
     local os=""
 
-    if [ "$OS_NAME" == "Darwin" ]; then
+    if [[ "$OS_NAME" == "Darwin" ]]; then
         os="osx"
-    elif [ "$OS_NAME" == "Linux" ] && [ -e "/etc/lsb-release" ]; then
+    elif [[ "$OS_NAME" == "Linux" ]] && [[ -e "/etc/lsb-release" ]]; then
         os="ubuntu"
     fi
 
@@ -113,9 +113,9 @@ is_git_repository() {
 }
 
 mkd() {
-    if [ -n "$1" ]; then
-        if [ -e "$1" ]; then
-            if [ ! -d "$1" ]; then
+    if [[ -n "$1" ]]; then
+        if [[ -e "$1" ]]; then
+            if [[ ! -d "$1" ]]; then
                 print_error "$1 - a file with the same name already exists!"
             else
                 print_success "$1"
@@ -175,8 +175,8 @@ main() {
         sourceFile="$(pwd)/$i"
         targetFile="$HOME/$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
 
-        if [ -e "$targetFile" ]; then
-            if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
+        if [[ -e "$targetFile" ]]; then
+            if [[ "$(readlink "$targetFile")" != "$sourceFile" ]]; then
 
                 ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                 if answer_is_yes; then
@@ -225,8 +225,8 @@ main() {
                 sourceFile="$(pwd)/$(printf "%s" "$file" | sed "s|\./||g")"
                 targetFile="${target_file_root}$(printf "%s" "$file" | sed "s|\./||g" | sed "s|${current}/||g")"
 
-                if [ -e "$targetFile" ]; then
-                    if [ "$(readlink "$targetFile")" != "$sourceFile" ]; then
+                if [[ -e "$targetFile" ]]; then
+                    if [[ "$(readlink "$targetFile")" != "$sourceFile" ]]; then
 
                         ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                         if answer_is_yes; then
