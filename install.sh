@@ -172,6 +172,10 @@ main() {
     # dotfiles
     echo "${FILES_TO_SYMLINK[@]}" | while read -r i ; do
 
+        if [[ "$i" == "" ]]; then
+          continue
+        fi
+
         sourceFile="$(pwd)/$i"
         targetFile="$HOME/$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
 
@@ -199,6 +203,10 @@ main() {
         # finds all .dotfiles in this folder
         declare -a TREE_OF_SYMLINK=$(cd "$SCRIPT_DIR"; find "${current}" -mindepth 1 -maxdepth 1 -type d -name "*")
 
+        if [[ "${TREE_OF_SYMLINK}" == "" ]]; then
+          continue
+        fi
+
         # branch for HOME and ROOT
         if [[ "${current}" == "HOME" ]]; then
             target_file_root="$HOME/"
@@ -209,6 +217,7 @@ main() {
         fi
 
         echo "${TREE_OF_SYMLINK[@]}" | while read -r i ; do
+
             dirs=$(find "$i" -type d)
             ifs_by_line
             for dir in ${dirs}; do
