@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eo pipefail
 
 # this symlinks all the dotfiles (and .vim/) to ~/
 # it also symlinks ~/bin for easy updating
