@@ -243,7 +243,7 @@ main() {
                 # create target file's parent directory if not exists.
                 dir=$(dirname "${targetFile}")
                 if [[ ! -d "${dir}" ]]; then
-                    mkdir -p "${dir}"
+                    $sudo_exec mkdir -p "${dir}"
                 fi
 
                 if [[ -e "$targetFile" ]]; then
