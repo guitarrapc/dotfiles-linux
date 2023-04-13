@@ -31,7 +31,7 @@ jobs:
         run: ls -la "$HOME"
       - name: Test installed files
         run: |
-          set -eo pipefail
+          set -exo pipefail
           ls -la "$HOME" | grep .gitignore | grep "${{ github.workspace }}/.gitignore"
           ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/.gitignore_global"
           if [[ "${{ matrix.force }}" == "n" ]]; then
