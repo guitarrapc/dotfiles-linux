@@ -179,6 +179,12 @@ main() {
         sourceFile="$(pwd)/$i"
         targetFile="$HOME/$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
 
+        # create target file's parent directory if not exists.
+        dir=$(dirname "${targetFile}")
+        if [[ ! -d "${dir}" ]]; then
+            mkdir -p "${dir}"
+        fi
+
         if [[ -e "$targetFile" ]]; then
             if [[ "$(readlink "$targetFile")" != "$sourceFile" ]]; then
 
@@ -233,6 +239,12 @@ main() {
 
                 sourceFile="$(pwd)/$(printf "%s" "$file" | sed "s|\./||g")"
                 targetFile="${target_file_root}$(printf "%s" "$file" | sed "s|\./||g" | sed "s|${current}/||g")"
+
+                # create target file's parent directory if not exists.
+                dir=$(dirname "${targetFile}")
+                if [[ ! -d "${dir}" ]]; then
+                    mkdir -p "${dir}"
+                fi
 
                 if [[ -e "$targetFile" ]]; then
                     if [[ "$(readlink "$targetFile")" != "$sourceFile" ]]; then
