@@ -229,7 +229,9 @@ main() {
             for dir in ${dirs}; do
                 ifs_revert
                 targetDir="$HOME/$(printf "%s" "$dir" | sed -e "s|\./||g" | sed -e "s|${current}/||g")"
-                mkdir -p "${target_file_root}${targetDir}"
+                if [[ ! -d "${target_file_root}${targetDir}" ]]; then
+                    $sudo_exec mkdir -p "${target_file_root}${targetDir}"
+                fi
             done
 
             files=$(find "$i" -type f)
