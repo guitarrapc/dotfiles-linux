@@ -224,16 +224,6 @@ main() {
 
         echo "${TREE_OF_SYMLINK[@]}" | while read -r i ; do
 
-            dirs=$(find "$i" -type d)
-            ifs_by_line
-            for dir in ${dirs}; do
-                ifs_revert
-                targetDir="$HOME/$(printf "%s" "$dir" | sed -e "s|\./||g" | sed -e "s|${current}/||g")"
-                if [[ ! -d "${target_file_root}${targetDir}" ]]; then
-                    $sudo_exec mkdir -p "${target_file_root}${targetDir}"
-                fi
-            done
-
             files=$(find "$i" -type f)
             ifs_by_line
             for file in ${files}; do
