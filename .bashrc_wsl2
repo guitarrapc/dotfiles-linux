@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# use Windows Docker Desktop as Docker daemon
+export DOCKER_HOST="tcp://$(ip route list default | awk '{print $3}')"

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# https://github.com/jonmosco/kube-ps1
+KUBECTX_PATH=${HOME}/github/kube-ps1
+if [[ -d "${KUBECTX_PATH}" ]]; then
+    source ${KUBECTX_PATH}/kube-ps1.sh
+    PS1='[\u@\h \W $(kube_ps1)]\$ '
+fi
+
+TERRAFORM_PATH=/usr/local/bin/terraform
+if [[ -f "${TERRAFORM_PATH}" ]]; then
+    complete -C ${TERRAFORM_PATH} terraform
+fi
+
+# https://github.com/99designs/aws-vault
+AWSVAULT_PATH=/usr/local/bin/aws-vault
+if [[ -f "${AWSVAULT_PATH}" ]]; then
+    export AWS_VAULT_BACKEND=file
+fi
+
+is_wsl2=$(cat /proc/version | grep -c microsoft-standard)
+if [[ "$is_wsl2" == "1" && -f "${HOME}/.bashrc_wsl2" ]]; then
+    source "${HOME}/.bashrc_wsl2"
+fi
