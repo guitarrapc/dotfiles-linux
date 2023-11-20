@@ -18,6 +18,12 @@ if [[ -f "${AWSVAULT_PATH}" ]]; then
     export AWS_VAULT_BACKEND=file
 fi
 
+# https://argoproj.github.io/argo-rollouts/installation/#kubectl-plugin-installation
+ARGOROLLOUTS_PATH=/usr/local/bin/kubectl-argo-rollouts
+if [[ -f "${ARGOROLLOUTS_PATH}" ]]; then
+    source <(kubectl-argo-rollouts completion bash)
+fi
+
 is_wsl2=$(cat /proc/version | grep -c microsoft-standard)
 if [[ "$is_wsl2" == "1" && -f "${HOME}/.bashrc_wsl2" ]]; then
     source "${HOME}/.bashrc_wsl2"
