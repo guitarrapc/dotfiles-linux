@@ -1,6 +1,6 @@
 #!/bin/bash
-echo 'export GOPATH=$HOME' > $HOME/.profile
-echo 'export PATH=$PATH:$HOME/go/bin' >> $HOME/.profile
-echo 'export PATH=$PATH:$GOPATH/bin' >> $HOME/.profile
+echo 'export GOPATH=$HOME' > $HOME/.go
+echo 'export PATH=$PATH:$HOME/go/bin' >> $HOME/.go
+echo 'export PATH=$PATH:$GOPATH/bin' >> $HOME/.go
 
-source $HOME/.profile
+source $HOME/.go
