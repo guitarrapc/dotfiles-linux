@@ -11,7 +11,8 @@ registries:
     ref: v4.219.0 # renovate: depName=aquaproj/aqua-registry
 
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
-# Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml --pin <pacakge>`
+# * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml --pin <pacakge>`
+# * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
 packages:
   - name: argoproj/argo-cd
     version: v2.12.3
