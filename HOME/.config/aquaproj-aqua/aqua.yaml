@@ -42,8 +42,6 @@ packages:
   - name: getsops/sops@v3.9.0
   - name: stern/stern@v1.30.0
   - name: tofuutils/tenv@v3.1.0
-  - name: hashicorp/terraform
-    version: v1.8.5
   - name: terraform-docs/terraform-docs@v0.18.0
   - name: GoogleCloudPlatform/terraformer@0.8.24
   - name: terraform-linters/tflint@v0.53.0
