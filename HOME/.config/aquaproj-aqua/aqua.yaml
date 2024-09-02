@@ -30,7 +30,8 @@ packages:
   - name: fullstorydev/grpcurl@v1.9.1
   - name: helm/helm@v3.15.4
   - name: ynqa/jnv@v0.4.0
-  - name: kubernetes/kubectl@v1.31.0
+  - name: kubernetes/kubectl
+    version: v1.30.0
   - name: ahmetb/kubectx@v0.9.5
   - name: ahmetb/kubectx/kubens@v0.9.5
   - name: kubernetes-sigs/kustomize@kustomize/v5.4.3
