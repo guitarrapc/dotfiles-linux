@@ -34,7 +34,7 @@ function answer_is_yes {
   || return 1
 }
 
-ask {
+function ask {
   print_question "$1"
   read
 }
@@ -46,7 +46,7 @@ function ask_for_confirmation {
     return
   fi
   print_question "$1 (y/n) "
-  read -n 1
+  read -r -n 1
   printf "\n"
 }
 
