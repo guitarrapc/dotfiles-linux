@@ -38,7 +38,7 @@ packages:
   - name: ahmetb/kubectx/kubens@v0.9.5
   - name: kubernetes-sigs/kustomize@kustomize/v5.4.3
   - name: jesseduffield/lazygit@v0.43.1
-  - name: nodejs/node@v22.7.0
+  - name: nodejs/node@20.9.0
   - name: peco/peco@v0.5.11
   - name: pulumi/pulumi@v3.130.0
   - name: koalaman/shellcheck@v0.10.0
