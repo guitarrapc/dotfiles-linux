@@ -34,8 +34,6 @@ packages:
   - name: ynqa/jnv@v0.4.0
   - name: kubernetes/kubectl
     version: v1.30.0
-  - name: ahmetb/kubectx@v0.9.5
-  - name: ahmetb/kubectx/kubens@v0.9.5
   - name: kubernetes-sigs/kustomize@kustomize/v5.4.3
   - name: jesseduffield/lazygit@v0.43.1
   - name: nodejs/node@v20.17.0
