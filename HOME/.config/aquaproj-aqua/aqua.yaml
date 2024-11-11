@@ -13,6 +13,7 @@ registries:
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <pacakge>`
 #   * Use `--ping` to install specific version
 # * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
+# * update all packlages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
   - name: argoproj/argo-cd@v2.12.3
   - name: argoproj/argo-rollouts@v1.7.2
