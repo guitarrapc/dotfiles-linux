@@ -55,3 +55,4 @@ packages:
   - name: mikefarah/yq@v4.45.1
   - name: smallstep/cli@v0.28.5
   - name: PowerShell/PowerShell@v7.5.0
+  - name: suzuki-shunsuke/pinact@v1.2.2
