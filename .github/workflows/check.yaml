@@ -24,20 +24,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install dotfiles
-        run: bash ${SH_DEBUG} ./install.sh --force ${{ matrix.force }}
+        run: bash "${SH_DEBUG}" ./install.sh --force "${{ matrix.force }}"
       - name: Show "$HOME"
         run: ls -la "$HOME"
       - name: Test installed files
         run: |
           set -exo pipefail
-          ls -la "$HOME" | grep .gitignore | grep "${{ github.workspace }}/.gitignore"
-          ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/.gitignore_global"
+          test -f "$HOME/.gitignore" && grep -q "${{ github.workspace }}/.gitignore" "$HOME/.gitignore"
+          test -f "$HOME/.gitignore_global" && grep -q "${{ github.workspace }}/.gitignore_global" "$HOME/.gitignore_global"
           if [[ "${{ matrix.force }}" == "n" ]]; then
-            docker_grep_arg="-v"
+            test -f "$HOME/.docker/config.json" && grep -v -q "${{ github.workspace }}/HOME/.docker/config.json" "$HOME/.docker/config.json"
+          else
+            test -f "$HOME/.docker/config.json" && grep -q "${{ github.workspace }}/HOME/.docker/config.json" "$HOME/.docker/config.json"
           fi
-          ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_aws.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectl.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectx.sh
+          test -f "/etc/profile.d/profile_dotfiles_init_aws.sh"
+          test -f "/etc/profile.d/profile_dotfiles_init_kubectl.sh"
+          test -f "/etc/profile.d/profile_dotfiles_init_kubectx.sh"
