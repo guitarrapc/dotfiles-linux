@@ -7,13 +7,9 @@ on:
     branches:
       - "master"
   workflow_dispatch:
-    inputs:
-      sh-debug:
-        description: "enable debug on install.sh"
-        default: "-x"
 
-env:
-  SH_DEBUG: ${{ github.event_name == 'workflow_dispath' && inputs.sh-debug || '' }}
+permissions:
+  contents: read
 
 jobs:
   install:
@@ -24,20 +20,43 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
       - name: Install dotfiles
-        run: bash ${SH_DEBUG} ./install.sh --force ${{ matrix.force }}
+        run: bash ./install.sh --force "${{ matrix.force }}"
       - name: Show "$HOME"
         run: ls -la "$HOME"
       - name: Test installed files
         run: |
-          set -exo pipefail
-          ls -la "$HOME" | grep .gitignore | grep "${{ github.workspace }}/.gitignore"
-          ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/.gitignore_global"
-          if [[ "${{ matrix.force }}" == "n" ]]; then
-            docker_grep_arg="-v"
+          set -eo pipefail
+          # Check if .gitignore_global exists and is a symlink
+          if [[ -L "$HOME/.gitignore_global" && "$(readlink -f "$HOME/.gitignore_global")" == "${{ github.workspace }}/.gitignore_global" ]]; then
+            echo ".gitignore_global is correctly linked"
+          else
+            echo "::error::.gitignore_global is missing or not linked correctly" && exit 1
           fi
-          ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_aws.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectl.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectx.sh
+
+          # Check if .docker/config.json exists and is a symlink
+          if [[ "${{ matrix.force }}" == "n" ]]; then
+            if [[ ! -L "$HOME/.docker/config.json" || "$(readlink -f "$HOME/.docker/config.json")" != "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
+              echo ".docker/config.json is correctly excluded"
+            else
+              echo "::error::config.json is incorrectly linked" && exit 1
+            fi
+          else
+            if [[ -L "$HOME/.docker/config.json" && "$(readlink -f "$HOME/.docker/config.json")" == "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
+              echo ".docker/config.json is correctly linked"
+            else
+              echo "::error::config.json is missing or not linked correctly" && exit 1
+            fi
+          fi
+
+          # Check if profile scripts exist
+          for file in profile_dotfiles_init_aws.sh profile_dotfiles_init_kubectl.sh profile_dotfiles_init_kubectx.sh; do
+            if [[ -f "/etc/profile.d/$file" ]]; then
+              echo "$file exists"
+            else
+              echo "::error::$file is missing" && exit 1
+            fi
+          done
