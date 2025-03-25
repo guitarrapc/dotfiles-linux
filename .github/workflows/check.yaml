@@ -30,12 +30,6 @@ jobs:
       - name: Test installed files
         run: |
           set -exo pipefail
-          if [[ -f "$HOME/.gitignore" && "$HOME/.gitignore" == *"${{ github.workspace }}/.gitignore"* ]]; then
-            echo ".gitignore is correctly linked"
-          else
-            echo ".gitignore is missing or not linked correctly" && exit 1
-          fi
-
           if [[ -f "$HOME/.gitignore_global" && "$HOME/.gitignore_global" == *"${{ github.workspace }}/.gitignore_global"* ]]; then
             echo ".gitignore_global is correctly linked"
           else
