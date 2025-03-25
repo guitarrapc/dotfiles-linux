@@ -30,16 +30,33 @@ jobs:
       - name: Test installed files
         run: |
           set -exo pipefail
-          if find "$HOME/.gitignore" -type f -maxdepth 1; then
-            echo "[x] TEST FAILED. .gitignore found."
-            exit 1
+          # Check if .gitignore_global exists and is a symlink
+          if [[ -L "$HOME/.gitignore_global" && "$(readlink -f "$HOME/.gitignore_global")" == "${{ github.workspace }}/.gitignore_global" ]]; then
+            echo ".gitignore_global is correctly linked"
+          else
+            echo "::error::.gitignore_global is missing or not linked correctly" && exit 1
           fi
 
-          ls -la "$HOME" | grep .gitignore_global | grep "${{ github.workspace }}/.gitignore_global"
+          # Check if .docker/config.json exists and is a symlink
           if [[ "${{ matrix.force }}" == "n" ]]; then
-            docker_grep_arg="-v"
+            if [[ ! -L "$HOME/.docker/config.json" || "$(readlink -f "$HOME/.docker/config.json")" != "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
+              echo "config.json is correctly excluded"
+            else
+              echo "::error::config.json is incorrectly linked" && exit 1
+            fi
+          else
+            if [[ -L "$HOME/.docker/config.json" && "$(readlink -f "$HOME/.docker/config.json")" == "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
+              echo "config.json is correctly linked"
+            else
+              echo "::error::config.json is missing or not linked correctly" && exit 1
+            fi
           fi
-          ls -la "$HOME/.docker" | grep config.json | grep ${docker_grep_arg} "${{ github.workspace }}/HOME/.docker/config.json"
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_aws.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectl.sh
-          ls -la "/etc/profile.d" | grep profile_dotfiles_init_kubectx.sh
+
+          # Check if profile scripts exist
+          for file in profile_dotfiles_init_aws.sh profile_dotfiles_init_kubectl.sh profile_dotfiles_init_kubectx.sh; do
+            if [[ -f "/etc/profile.d/$file" ]]; then
+              echo "$file exists"
+            else
+              echo "::error::$file is missing" && exit 1
+            fi
+          done
