@@ -30,13 +30,36 @@ jobs:
       - name: Test installed files
         run: |
           set -exo pipefail
-          test -f "$HOME/.gitignore" && grep -q "${{ github.workspace }}/.gitignore" "$HOME/.gitignore"
-          test -f "$HOME/.gitignore_global" && grep -q "${{ github.workspace }}/.gitignore_global" "$HOME/.gitignore_global"
-          if [[ "${{ matrix.force }}" == "n" ]]; then
-            test -f "$HOME/.docker/config.json" && grep -v -q "${{ github.workspace }}/HOME/.docker/config.json" "$HOME/.docker/config.json"
+          if [[ -f "$HOME/.gitignore" && "$HOME/.gitignore" == *"${{ github.workspace }}/.gitignore"* ]]; then
+            echo ".gitignore is correctly linked"
           else
-            test -f "$HOME/.docker/config.json" && grep -q "${{ github.workspace }}/HOME/.docker/config.json" "$HOME/.docker/config.json"
+            echo ".gitignore is missing or not linked correctly" && exit 1
           fi
-          test -f "/etc/profile.d/profile_dotfiles_init_aws.sh"
-          test -f "/etc/profile.d/profile_dotfiles_init_kubectl.sh"
-          test -f "/etc/profile.d/profile_dotfiles_init_kubectx.sh"
+
+          if [[ -f "$HOME/.gitignore_global" && "$HOME/.gitignore_global" == *"${{ github.workspace }}/.gitignore_global"* ]]; then
+            echo ".gitignore_global is correctly linked"
+          else
+            echo ".gitignore_global is missing or not linked correctly" && exit 1
+          fi
+
+          if [[ "${{ matrix.force }}" == "n" ]]; then
+            if [[ ! -f "$HOME/.docker/config.json" || "$HOME/.docker/config.json" == *"${{ github.workspace }}/HOME/.docker/config.json"* ]]; then
+              echo "config.json is correctly excluded"
+            else
+              echo "config.json is incorrectly linked" && exit 1
+            fi
+          else
+            if [[ -f "$HOME/.docker/config.json" && "$HOME/.docker/config.json" == *"${{ github.workspace }}/HOME/.docker/config.json"* ]]; then
+              echo "config.json is correctly linked"
+            else
+              echo "config.json is missing or not linked correctly" && exit 1
+            fi
+          fi
+
+          for file in profile_dotfiles_init_aws.sh profile_dotfiles_init_kubectl.sh profile_dotfiles_init_kubectx.sh; do
+            if [[ -f "/etc/profile.d/$file" ]]; then
+              echo "$file exists"
+            else
+              echo "$file is missing" && exit 1
+            fi
+          done
