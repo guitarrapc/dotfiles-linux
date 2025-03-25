@@ -29,7 +29,7 @@ jobs:
         run: ls -la "$HOME"
       - name: Test installed files
         run: |
-          set -exo pipefail
+          set -eo pipefail
           # Check if .gitignore_global exists and is a symlink
           if [[ -L "$HOME/.gitignore_global" && "$(readlink -f "$HOME/.gitignore_global")" == "${{ github.workspace }}/.gitignore_global" ]]; then
             echo ".gitignore_global is correctly linked"
@@ -40,13 +40,13 @@ jobs:
           # Check if .docker/config.json exists and is a symlink
           if [[ "${{ matrix.force }}" == "n" ]]; then
             if [[ ! -L "$HOME/.docker/config.json" || "$(readlink -f "$HOME/.docker/config.json")" != "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
-              echo "config.json is correctly excluded"
+              echo ".docker/config.json is correctly excluded"
             else
               echo "::error::config.json is incorrectly linked" && exit 1
             fi
           else
             if [[ -L "$HOME/.docker/config.json" && "$(readlink -f "$HOME/.docker/config.json")" == "${{ github.workspace }}/HOME/.docker/config.json" ]]; then
-              echo "config.json is correctly linked"
+              echo ".docker/config.json is correctly linked"
             else
               echo "::error::config.json is missing or not linked correctly" && exit 1
             fi
