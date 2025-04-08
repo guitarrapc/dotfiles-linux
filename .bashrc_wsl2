@@ -1,4 +1,6 @@
 #!/bin/bash
 
-# use Windows Docker Desktop as Docker daemon
-export DOCKER_HOST="tcp://$(ip route list default | awk '{print $3}')"
+# use Windows Docker Desktop as Docker daemon if Docker Desktop (WSL2) is disabled
+if [[ ! -f "/mnt/wsl/docker-desktop/cli-tools/usr/bin/docker" ]]; then
+  export DOCKER_HOST="tcp://$(ip route list default | awk '{print $3}')"
+fi
