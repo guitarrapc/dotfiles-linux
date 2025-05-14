@@ -27,14 +27,14 @@ jobs:
         run: bash ./install.sh --force "${{ matrix.force }}"
       - name: Show "$HOME"
         run: ls -la "$HOME"
-      - name: Test installed files
+      - name: Test file located as expected
         run: |
           set -eo pipefail
-          # Check if .gitignore_global exists and is a symlink
-          if [[ -L "$HOME/.gitignore_global" && "$(readlink -f "$HOME/.gitignore_global")" == "${{ github.workspace }}/.gitignore_global" ]]; then
-            echo ".gitignore_global is correctly linked"
+          # Check if .config/git/config exists and is a symlink
+          if [[ -L "$HOME/.config/git/config" && "$(readlink -f "$HOME/.config/git/config")" == "${{ github.workspace }}/HOME/.config/git/config" ]]; then
+            echo ".config/git/config is correctly linked"
           else
-            echo "::error::.gitignore_global is missing or not linked correctly" && exit 1
+            echo "::error::.config/git/config is missing or not linked correctly" && exit 1
           fi
 
           # Check if profile scripts exist
