@@ -1,0 +1,85 @@
+[user]
+	name = Ikiru Yoshizaki
+	email = 3856350+guitarrapc@users.noreply.github.com
+
+# -- definitely make git better -- #
+[core]
+	quotepath = false
+	symlinks = true
+	filemode = false
+	longpaths = true
+	ignorecase = false
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+	forceSignAnnotated = false
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[diff "sjis"]
+	textconv = "iconv -f sjis"
+[push]
+	default = simple
+	followTags = true
+	autoSetupRemote = true
+	# enable git push --force-if-includes
+	useForceIfIncludes = true
+[fetch]
+	# Auto-kill defunct remote branches/tags
+	prune = true
+	pruneTags = true
+	all = true
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+
+# -- why not? -- #
+[help]
+	autocorrect = 1
+[gui]
+	encoding = utf-8
+[commit]
+	gpgSign = false
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	grep = auto
+	ui = auto
+[status]
+	color = auto
+
+# -- a matter of taste -- #
+[credential "https://source.developers.google.com"]
+	useHttpPath = true
+[pull]
+	rebase = true
+[submodule]
+	recurse = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[lfs]
+	locksverify = false
+[gpg]
+	format =
+	program = gpg
+[gpg "ssh"]
+	program =
+	allowedSignersFile =
