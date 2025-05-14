@@ -26,7 +26,11 @@ jobs:
       - name: Install dotfiles
         run: bash ./install.sh --force "${{ matrix.force }}"
       - name: Show "$HOME"
-        run: ls -la "$HOME"
+        run: ls -lRa "$HOME"
+      - name: Show "/etc"
+        run: |
+          ls -lRa "/etc/docker/"
+          ls -lRa "/etc/profile.d/"
       - name: Test file located as expected
         run: |
           set -eo pipefail
