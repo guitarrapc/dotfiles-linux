@@ -1,4 +1,4 @@
-name: update aqua
+name: Update aqua
 on:
   workflow_dispatch:
   schedule:
