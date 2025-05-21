@@ -1,0 +1,44 @@
+name: update aqua
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0" # every Sunday at midnight UTC
+
+jobs:
+  aqua:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: aqua update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: aqua update
+        working-directory: ${{ github.workspace }}/HOME/.config/aquaproj-aqua
+      # is change happen?
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
+      # Commit if change happen, then create PR. force push when ions[botbranch/pr already exists.
+      - name: Create PullRequest
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        id: cpr
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        with:
+          base: master
+          branch: "auto-pr/update-aqua"
+          author: github-actions[bot] <41898282+github-act]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          delete-branch: true
+          commit-message: "[aqua update] Automated changes"
+          title: "[aqua update] Automated changes"
+          body: |
+            ## tl;dr;
+            Updated aqua packages.
+          labels: |
+            automated pr
