@@ -8,7 +8,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.365.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.369.0 # renovate: depName=aquaproj/aqua-registry
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <pacakge>`
 #   * Use `--ping` to install specific version
