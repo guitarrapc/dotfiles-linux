@@ -8,15 +8,14 @@ on:
       - "master"
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   install:
     strategy:
       fail-fast: false
       matrix:
         force: ["y", "n"]
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
