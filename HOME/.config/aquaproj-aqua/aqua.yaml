@@ -8,7 +8,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.374.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.376.0 # renovate: depName=aquaproj/aqua-registry
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <pacakge>`
 #   * Use `--ping` to install specific version
@@ -16,38 +16,38 @@ registries:
 # * update all packlages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
   - name: argoproj/argo-cd@v3.0.5
-  - name: argoproj/argo-rollouts@v1.8.2
-  - name: aws/aws-cli@2.27.26
+  - name: argoproj/argo-rollouts@v1.8.3
+  - name: aws/aws-cli@2.27.31
   - name: 99designs/aws-vault@v7.2.0
   - name: biomejs/biome@cli/v1.9.4
   - name: codesenberg/bombardier@v2.0.2
   - name: fujiwara/cfft@v0.8.2
-  - name: CircleCI-Public/circleci-cli@v0.1.32145
+  - name: CircleCI-Public/circleci-cli@v0.1.32367
   - name: cli/cli@v2.74.0
-  - name: open-policy-agent/conftest@v0.61.0
+  - name: open-policy-agent/conftest@v0.61.1
   - name: bcicen/ctop@v0.7.7
   - name: direnv/direnv@v2.36.0
   - name: homeport/dyff@v1.10.1
   - name: awslabs/eks-node-viewer@v0.7.4
-  - name: eksctl-io/eksctl@v0.208.0
+  - name: eksctl-io/eksctl@v0.210.0
   - name: grpc-ecosystem/grpc-health-probe@v0.4.38
   - name: fullstorydev/grpcurl@v1.9.3
-  - name: helm/helm@v3.18.1
+  - name: helm/helm@v3.18.2
   - name: ynqa/jnv@v0.6.0
   - name: zegl/kube-score@v1.20.0
   - name: kubernetes/kubectl
     version: v1.32.2
   - name: yannh/kubeconform@v0.7.0
   - name: kubernetes-sigs/kustomize@kustomize/v5.6.0
-  - name: jesseduffield/lazygit@v0.51.1
+  - name: jesseduffield/lazygit@v0.52.0
   - name: nodejs/node@v24.1.0
   - name: peco/peco@v0.5.11
   - name: FairwindsOps/pluto@v5.21.7
-  - name: pulumi/pulumi@v3.173.0
+  - name: pulumi/pulumi@v3.175.0
   - name: koalaman/shellcheck@v0.10.0
   - name: getsops/sops@v3.10.2
   - name: stern/stern@v1.32.0
-  - name: tofuutils/tenv@v4.6.2
+  - name: tofuutils/tenv@v4.7.0
   - name: terraform-docs/terraform-docs@v0.20.0
   - name: GoogleCloudPlatform/terraformer@0.8.30
   - name: terraform-linters/tflint@v0.58.0
