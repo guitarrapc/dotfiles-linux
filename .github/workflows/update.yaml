@@ -45,3 +45,4 @@ jobs:
             Updated aqua packages.
           labels: |
             automated pr
+          token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}

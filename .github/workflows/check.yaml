@@ -48,3 +48,25 @@ jobs:
               echo "::error::$file is missing" && exit 1
             fi
           done
+      - name: Setup aqua
+        if: ${{ matrix.force == 'y' }}
+        uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: Test Aqua app can execute
+        if: ${{ matrix.force == 'y' }}
+        run: |
+          export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
+
+          argocd version --client
+          aws --version
+          aws-vault --version
+          gh --version
+          conftest --version
+          direnv --version
+          grpcurl --version
+          helm version
+          kubectl version --client
+          shellcheck --version
+        env:
+          GIHTUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
