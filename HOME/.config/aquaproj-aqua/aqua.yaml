@@ -45,7 +45,6 @@ packages:
   - name: FairwindsOps/pluto@v5.21.7
   - name: pulumi/pulumi@v3.177.0
   - name: koalaman/shellcheck@v0.10.0
-  - name: getsops/sops@v3.10.2
   - name: stern/stern@v1.32.0
   - name: tofuutils/tenv@v4.7.6
   - name: terraform-docs/terraform-docs@v0.20.0
