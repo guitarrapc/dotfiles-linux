@@ -8,7 +8,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.379.1 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.382.0 # renovate: depName=aquaproj/aqua-registry
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <pacakge>`
 #   * Use `--ping` to install specific version
@@ -17,20 +17,20 @@ registries:
 packages:
   - name: argoproj/argo-cd@v3.0.6
   - name: argoproj/argo-rollouts@v1.8.3
-  - name: aws/aws-cli@2.27.40
+  - name: aws/aws-cli@2.27.49
   - name: 99designs/aws-vault@v7.2.0
-  - name: biomejs/biome@@biomejs/biome@2.0.4
+  - name: biomejs/biome@@biomejs/biome@2.0.6
   - name: codesenberg/bombardier@v2.0.2
   - name: fujiwara/cfft@v0.8.2
-  - name: CircleCI-Public/circleci-cli@v0.1.32367
+  - name: CircleCI-Public/circleci-cli@v0.1.32638
   - name: cli/cli@v2.74.2
   - name: open-policy-agent/conftest@v0.61.2
   - name: bcicen/ctop@v0.7.7
-  - name: direnv/direnv@v2.36.0
+  - name: direnv/direnv@v2.37.0
   - name: homeport/dyff@v1.10.1
   - name: awslabs/eks-node-viewer@v0.7.4
   - name: eksctl-io/eksctl@v0.210.0
-  - name: grpc-ecosystem/grpc-health-probe@v0.4.38
+  - name: grpc-ecosystem/grpc-health-probe@v0.4.39
   - name: fullstorydev/grpcurl@v1.9.3
   - name: helm/helm@v3.18.3
   - name: ynqa/jnv@v0.6.0
@@ -38,19 +38,19 @@ packages:
   - name: kubernetes/kubectl
     version: v1.32.2
   - name: yannh/kubeconform@v0.7.0
-  - name: kubernetes-sigs/kustomize@kustomize/v5.6.0
-  - name: jesseduffield/lazygit@v0.52.0
-  - name: nodejs/node@v24.2.0
+  - name: kubernetes-sigs/kustomize@kustomize/v5.7.0
+  - name: jesseduffield/lazygit@v0.53.0
+  - name: nodejs/node@v24.3.0
   - name: peco/peco@v0.5.11
   - name: FairwindsOps/pluto@v5.21.8
-  - name: pulumi/pulumi@v3.178.0
+  - name: pulumi/pulumi@v3.181.0
   - name: koalaman/shellcheck@v0.10.0
   - name: stern/stern@v1.32.0
   - name: tofuutils/tenv@v4.7.6
   - name: terraform-docs/terraform-docs@v0.20.0
   - name: GoogleCloudPlatform/terraformer@0.8.30
   - name: terraform-linters/tflint@v0.58.0
-  - name: aquasecurity/trivy@v0.63.0
+  - name: aquasecurity/trivy@v0.64.1
   - name: mikefarah/yq@v4.45.4
   - name: smallstep/cli@v0.28.6
-  - name: PowerShell/PowerShell@v7.5.1
+  - name: PowerShell/PowerShell@v7.5.2
