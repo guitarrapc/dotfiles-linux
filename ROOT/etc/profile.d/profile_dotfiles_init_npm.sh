@@ -6,3 +6,7 @@ export PATH=$NPM_CONFIG_PREFIX/bin:$PATH
 if [[ ! -d "$NPM_CONFIG_PREFIX/bin" ]]; then
   mkdir -p "$NPM_CONFIG_PREFIX/bin"
 fi
+
+if [[ ! -d "$NPM_CONFIG_PREFIX/lib" ]]; then
+  mkdir -p "$NPM_CONFIG_PREFIX/lib"
+fi
