@@ -60,13 +60,9 @@ jobs:
           aqua i -a
 
           aws --version
-          aws-vault --version
           gh --version
           conftest --version
-          grpcurl --version
-          helm version
           kubectl version --client
-          shellcheck --version
         env:
           GIHTUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
