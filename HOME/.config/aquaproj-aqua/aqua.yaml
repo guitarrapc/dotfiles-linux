@@ -16,7 +16,6 @@ registries:
 # * update all packlages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
   - name: argoproj/argo-cd@v3.0.6
-  - name: argoproj/argo-rollouts@v1.8.3
   - name: aws/aws-cli@2.27.49
   - name: 99designs/aws-vault@v7.2.0
   - name: biomejs/biome@@biomejs/biome@2.0.6
@@ -26,10 +25,8 @@ packages:
   - name: cli/cli@v2.74.2
   - name: open-policy-agent/conftest@v0.61.2
   - name: bcicen/ctop@v0.7.7
-  - name: direnv/direnv@v2.37.0
   - name: homeport/dyff@v1.10.1
   - name: awslabs/eks-node-viewer@v0.7.4
-  - name: eksctl-io/eksctl@v0.210.0
   - name: grpc-ecosystem/grpc-health-probe@v0.4.39
   - name: fullstorydev/grpcurl@v1.9.3
   - name: helm/helm@v3.18.3
@@ -39,7 +36,6 @@ packages:
     version: v1.32.2
   - name: yannh/kubeconform@v0.7.0
   - name: kubernetes-sigs/kustomize@kustomize/v5.7.0
-  - name: jesseduffield/lazygit@v0.53.0
   - name: nodejs/node@v24.3.0
   - name: peco/peco@v0.5.11
   - name: FairwindsOps/pluto@v5.21.8
