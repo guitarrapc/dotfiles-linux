@@ -15,7 +15,6 @@ registries:
 # * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
 # * update all packlages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
-  - name: argoproj/argo-cd@v3.0.6
   - name: aws/aws-cli@2.27.49
   - name: 99designs/aws-vault@v7.2.0
   - name: biomejs/biome@@biomejs/biome@2.0.6
