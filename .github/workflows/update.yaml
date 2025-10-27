@@ -17,7 +17,7 @@ jobs:
           persist-credentials: false
       - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
         with:
-          aqua_version: v2.43.1
+          aqua_version: v2.55.1
       - name: aqua update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,21 +28,16 @@ jobs:
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
       # Commit if change happen, then create PR. force push when ions[botbranch/pr already exists.
-      - name: Create PullRequest
+      - name: Commit changes
         if: ${{ steps.git-check.outputs.modified == 'true' }}
-        id: cpr
-        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
-        with:
-          base: master
-          branch: "auto-pr/update-aqua"
-          author: github-actions[bot] <41898282+github-act]@users.noreply.github.com>
-          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          delete-branch: true
-          commit-message: "[aqua update] Automated changes"
-          title: "[aqua update] Automated changes"
-          body: |
-            ## tl;dr;
-            Updated aqua packages.
-          labels: |
-            automated pr
-          token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "auto-pr/update-aqua"
+          git add HOME/.config/aquaproj-aqua/aqua.yaml
+          git commit -m "[aqua update] Automated changes"
+          git push --force origin "auto-pr/update-aqua"
+      - name: Create pull request with gh
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        run: |
+          gh pr create --base master --head auto-pr/update-aqua --title "[automate] Update aqua packages" --body "## summary\n\nUpdated aqua packages." --label "automated pr"
