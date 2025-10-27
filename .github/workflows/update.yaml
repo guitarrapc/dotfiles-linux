@@ -28,11 +28,15 @@ jobs:
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
       # Commit if change happen, then create PR. force push when ions[botbranch/pr already exists.
+      - name: Configure git for GitHub Acitons
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}@github.com/${{ github.repository }}
       - name: Commit changes
         if: ${{ steps.git-check.outputs.modified == 'true' }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "auto-pr/update-aqua"
           git add HOME/.config/aquaproj-aqua/aqua.yaml
           git commit -m "[aqua update] Automated changes"
@@ -41,3 +45,5 @@ jobs:
         if: ${{ steps.git-check.outputs.modified == 'true' }}
         run: |
           gh pr create --base master --head auto-pr/update-aqua --title "[automate] Update aqua packages" --body "## summary\n\nUpdated aqua packages." --label "automated pr"
+        env:
+          GH_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
