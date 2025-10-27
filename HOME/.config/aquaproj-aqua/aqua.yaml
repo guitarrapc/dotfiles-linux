@@ -13,7 +13,7 @@ registries:
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <package>`
 #   * Use `--ping` to install specific version
 # * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
-# * update all packlages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
+# * update all packages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
   - name: aws/aws-cli@2.31.22
   - name: CircleCI-Public/circleci-cli@v0.1.33494
