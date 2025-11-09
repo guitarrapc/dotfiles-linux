@@ -37,13 +37,22 @@ jobs:
       - name: Commit changes
         if: ${{ steps.git-check.outputs.modified == 'true' }}
         run: |
-          git checkout -b "auto-pr/update-aqua"
+          git switch -c "auto-pr/update-aqua"
           git add HOME/.config/aquaproj-aqua/aqua.yaml
           git commit -m "[aqua update] Automated changes"
           git push --force origin "auto-pr/update-aqua"
       - name: Create pull request with gh
         if: ${{ steps.git-check.outputs.modified == 'true' }}
         run: |
-          gh pr create --base master --head auto-pr/update-aqua --title "[automate] Update aqua packages" --body "## summary\n\nUpdated aqua packages." --label "automated pr"
+          # check if PR already exists
+          if gh pr list --head "auto-pr/update-aqua" --json number --jq ".[0].number" > /dev/null; then
+            echo "Pull request already exists. Exiting."
+            exit 0
+          fi
+          cat <<EOF > body.md
+          ## summary
+          Updated aqua packages.
+          EOF
+          gh pr create --base master --head auto-pr/update-aqua --title "[automate] Update aqua packages" --body-file "body.md" --label "automated pr"
         env:
           GH_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
