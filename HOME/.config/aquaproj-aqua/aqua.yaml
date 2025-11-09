@@ -8,23 +8,23 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.430.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.433.0 # renovate: depName=aquaproj/aqua-registry
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <package>`
 #   * Use `--ping` to install specific version
 # * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
 # * update all packages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
-  - name: aws/aws-cli@2.31.22
+  - name: aws/aws-cli@2.31.32
   - name: CircleCI-Public/circleci-cli@v0.1.33494
-  - name: cli/cli@v2.82.1
-  - name: open-policy-agent/conftest@v0.63.0
+  - name: cli/cli@v2.83.0
+  - name: open-policy-agent/conftest@v0.64.0
   - name: ynqa/jnv@v0.6.1
   - name: kubernetes/kubectl
     version: v1.32.2
   - name: kubernetes-sigs/kustomize@kustomize/v5.7.1
-  - name: nodejs/node@v25.0.0
-  - name: pulumi/pulumi@v3.204.0
+  - name: nodejs/node@v25.1.0
+  - name: pulumi/pulumi@v3.206.0
   - name: koalaman/shellcheck@v0.11.0
   - name: tofuutils/tenv@v4.7.21
   - name: GoogleCloudPlatform/terraformer@0.8.30
