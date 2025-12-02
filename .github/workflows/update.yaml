@@ -45,7 +45,7 @@ jobs:
         if: ${{ steps.git-check.outputs.modified == 'true' }}
         run: |
           # check if PR already exists
-          if gh pr list --head "auto-pr/update-aqua" --json number --jq ".[0].number" > /dev/null; then
+          if [[ "$(gh pr list --head "auto-pr/update-aqua" --json number --jq ".[0].number")" != "" ]]; then
             echo "Pull request already exists. Exiting."
             exit 0
           fi
