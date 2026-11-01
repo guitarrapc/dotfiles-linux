@@ -8,21 +8,21 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.488.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.579.0 # renovate: depName=aquaproj/aqua-registry
 # see packages for https://github.com/aquaproj/aqua-registry or `aqua g`
 # * Add package by `aqua g -i -o HOME/.config/aquaproj-aqua/aqua.yaml <package>`
 #   * Use `--ping` to install specific version
 # * Update package by `pushd HOME/.config/aquaproj-aqua/ && aqua update && popd`
 # * update all packages via `aqua -c $AQUA_GLOBAL_CONFIG update --limit 10`
 packages:
-  - name: aws/aws-cli@2.34.19
-  - name: open-policy-agent/conftest@v0.67.1
-  - name: ynqa/jnv@v0.7.0
-  - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
-  - name: nodejs/node@v25.8.2
-  - name: pulumi/pulumi@v3.228.0
+  - name: aws/aws-cli@2.39.3
+  - name: open-policy-agent/conftest@v0.71.1
+  - name: ynqa/jnv@v0.7.1
+  - name: kubernetes-sigs/kustomize@kustomize/v5.8.3
+  - name: nodejs/node@v26.13.0
+  - name: pulumi/pulumi@v3.273.0
   - name: koalaman/shellcheck@v0.11.0
-  - name: tofuutils/tenv@v4.9.3
+  - name: tofuutils/tenv@v4.15.1
   - name: GoogleCloudPlatform/terraformer@0.8.30
-  - name: terraform-linters/tflint@v0.61.0
-  - name: PowerShell/PowerShell@v7.6.0
+  - name: terraform-linters/tflint@v0.65.0
+  - name: PowerShell/PowerShell@v7.6.9
